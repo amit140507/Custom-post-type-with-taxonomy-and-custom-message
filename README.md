@@ -106,9 +106,64 @@ add_action( 'init', 'custom_taxonomy_book_genre', 0 );
 ## Custom Message
 ### 1
 ```
+
+// CUSTOM MESSAGES
+
+function book_custom_messages( $messages ) {
+  global $post, $post_ID;
+  $messages['book'] = array(
+    0  => '', // Unused. Messages start at index 1. 
+    1 => sprintf( __('Book updated. <a href="%s">View Book</a>'), esc_url( get_permalink($post_ID) ) ),
+    2 => __('Custom field updated.'),
+    3 => __('Custom field deleted.'),
+    4 => __('Book updated.'),
+    5 => isset($_GET['revision']) ? sprintf( __('Book restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+    6 => sprintf( __('Book published. <a href="%s">View Book</a>'), esc_url( get_permalink($post_ID) ) ),
+    7 => __('Product saved.'),
+    8 => sprintf( __('Book submitted. <a target="_blank" href="%s">Preview product</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    9 => sprintf( __('Book scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview product</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+    10 => sprintf( __('Book draft updated. <a target="_blank" href="%s">Preview product</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+  );
+  return $messages;
+}
+add_filter( 'post_updated_messages', 'book_custom_messages' );
 ```
 ### 2
 ```
+add_filter( 'post_updated_messages', 'book_custom_messages' );
+function book_custom_messages( $messages ) {
+    $post             = get_post();
+    $post_type        = get_post_type( $post );
+    $post_type_object = get_post_type_object( $post_type );
+    $messages['book'] = array(
+        0  => '', // Unused. Messages start at index 1.
+        1  => __( 'Book updated.', 'textdomain' ),
+        2  => __( 'Custom field updated.', 'textdomain' ),
+        3  => __( 'Custom field deleted.', 'textdomain' ),
+        4  => __( 'Book updated.', 'textdomain' ),
+        5  => isset( $_GET['revision'] ) ? sprintf( __( 'Book restored to revision from %s', 'textdomain' ), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+        6  => __( 'Book published.', 'textdomain' ),
+        7  => __( 'Book saved.', 'textdomain' ),
+        8  => __( 'Book submitted.', 'textdomain' ),
+        9  => sprintf(
+            __( 'Book scheduled for: <strong>%1$s</strong>.', 'textdomain' ),
+            date_i18n( __( 'M j, Y @ G:i', 'textdomain' ), strtotime( $post->post_date ) )
+        ),
+        10 => __( 'Book draft updated.', 'textdomain' )
+    );
+    if ( $post_type_object->publicly_queryable ) {
+        $permalink = get_permalink( $post->ID );
+        $view_link = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), __( 'View book', 'textdomain' ) );
+        $messages[ $post_type ][1] .= $view_link;
+        $messages[ $post_type ][6] .= $view_link;
+        $messages[ $post_type ][9] .= $view_link;
+        $preview_permalink = add_query_arg( 'preview', 'true', $permalink );
+        $preview_link      = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview book', 'textdomain' ) );
+        $messages[ $post_type ][8] .= $preview_link;
+        $messages[ $post_type ][10] .= $preview_link;
+    }
+    return $messages;
+}
 ```
 
 
@@ -215,6 +270,28 @@ add_action( 'init', 'custom_taxonomy_book_genre', 0 );
 
 register_taxonomy_for_object_type( 'book_languages', 'book' );
 register_taxonomy_for_object_type( 'book_genres', 'book' );
+
+
+// CUSTOM MESSAGES
+
+function book_custom_messages( $messages ) {
+  global $post, $post_ID;
+  $messages['book'] = array(
+    0  => '', // Unused. Messages start at index 1. 
+    1 => sprintf( __('Book updated. <a href="%s">View Book</a>'), esc_url( get_permalink($post_ID) ) ),
+    2 => __('Custom field updated.'),
+    3 => __('Custom field deleted.'),
+    4 => __('Book updated.'),
+    5 => isset($_GET['revision']) ? sprintf( __('Book restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+    6 => sprintf( __('Book published. <a href="%s">View Book</a>'), esc_url( get_permalink($post_ID) ) ),
+    7 => __('Product saved.'),
+    8 => sprintf( __('Book submitted. <a target="_blank" href="%s">Preview product</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+    9 => sprintf( __('Book scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview product</a>'), date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+    10 => sprintf( __('Book draft updated. <a target="_blank" href="%s">Preview product</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
+  );
+  return $messages;
+}
+add_filter( 'post_updated_messages', 'book_custom_messages' );
 ```
 
 ## References
