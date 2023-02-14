@@ -104,7 +104,7 @@ add_action( 'init', 'custom_taxonomy_book_genre', 0 );
 ```
 
 ## Custom Message
-### 1
+### #1
 ```
 
 // CUSTOM MESSAGES
@@ -128,7 +128,7 @@ function book_custom_messages( $messages ) {
 }
 add_filter( 'post_updated_messages', 'book_custom_messages' );
 ```
-### 2
+### #2
 ```
 add_filter( 'post_updated_messages', 'book_custom_messages' );
 function book_custom_messages( $messages ) {
@@ -300,6 +300,8 @@ add_filter( 'post_updated_messages', 'book_custom_messages' );
 [register_taxonomy](https://developer.wordpress.org/reference/functions/register_taxonomy/)
 
 [register_taxonomy_for_object_type](https://developer.wordpress.org/reference/functions/register_taxonomy_for_object_type/)
+
+[post_updated_messages](https://developer.wordpress.org/reference/hooks/post_updated_messages/)
 
 [The Complete Guide To WordPress Custom Post Types](https://www.smashingmagazine.com/2012/11/complete-guide-custom-post-types/)
 
