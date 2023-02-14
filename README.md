@@ -104,6 +104,10 @@ add_action( 'init', 'custom_taxonomy_book_genre', 0 );
 ```
 
 ## Custom Message
+### 1
+```
+```
+### 2
 ```
 ```
 
@@ -215,8 +219,13 @@ register_taxonomy_for_object_type( 'book_genres', 'book' );
 
 ## References
 [register_post_type](https://developer.wordpress.org/reference/functions/register_post_type/)
+
 [register_taxonomy](https://developer.wordpress.org/reference/functions/register_taxonomy/)
+
 [register_taxonomy_for_object_type](https://developer.wordpress.org/reference/functions/register_taxonomy_for_object_type/)
+
 [The Complete Guide To WordPress Custom Post Types](https://www.smashingmagazine.com/2012/11/complete-guide-custom-post-types/)
+
 [How To Create A Custom Taxonomy In WordPress](https://www.smashingmagazine.com/2012/01/create-custom-taxonomies-wordpress/)
+
 [Extending WordPress With Custom Content Types](https://www.smashingmagazine.com/2015/04/extending-wordpress-custom-content-types/)
