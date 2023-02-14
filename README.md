@@ -1,2 +1,2 @@
-# Custom-post-type
-custom post type
+# Custom post type with taxonomy
+
